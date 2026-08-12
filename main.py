@@ -4,11 +4,11 @@ import logging
 from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
-from aiogram.fsm.storage.memory import MemoryStorage
 
 import db
 from config import BOT_TOKEN
 from handlers import router
+from storage import PostgresStorage
 
 logging.basicConfig(level=logging.INFO)
 
@@ -17,11 +17,14 @@ async def main() -> None:
     await db.init_db()
 
     bot = Bot(token=BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
-    dp = Dispatcher(storage=MemoryStorage())
+    dp = Dispatcher(storage=PostgresStorage())
     dp.include_router(router)
 
-    await bot.delete_webhook(drop_pending_updates=True)
-    await dp.start_polling(bot)
+    try:
+        await bot.delete_webhook(drop_pending_updates=True)
+        await dp.start_polling(bot)
+    finally:
+        await db.close_pool()
 
 
 if __name__ == "__main__":

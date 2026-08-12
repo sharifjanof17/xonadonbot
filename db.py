@@ -16,6 +16,13 @@ async def get_pool() -> asyncpg.Pool:
     return _pool
 
 
+async def close_pool() -> None:
+    global _pool
+    if _pool is not None:
+        await _pool.close()
+        _pool = None
+
+
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS families (
     id SERIAL PRIMARY KEY,
@@ -50,7 +57,20 @@ CREATE TABLE IF NOT EXISTS entries (
     caption TEXT,
     created_at TIMESTAMPTZ DEFAULT now()
 );
+
+CREATE INDEX IF NOT EXISTS entries_family_category_idx
+    ON entries (family_id, category_id, created_at DESC);
+
+-- FSM holatlari: bot qayta ishga tushganda ham yarim qolgan amal yo'qolmasligi uchun
+CREATE TABLE IF NOT EXISTS fsm_storage (
+    key TEXT PRIMARY KEY,
+    state TEXT,
+    data JSONB NOT NULL DEFAULT '{}'::jsonb,
+    updated_at TIMESTAMPTZ DEFAULT now()
+);
 """
+
+ENTRIES_PAGE_SIZE = 5
 
 
 def _gen_invite_code(length: int = 6) -> str:
@@ -96,6 +116,33 @@ async def create_user_with_new_family(telegram_id: int, full_name: str) -> async
                 telegram_id, full_name, family["id"],
             )
             return user
+
+
+async def get_or_create_user(telegram_id: int, full_name: str) -> asyncpg.Record:
+    """Foydalanuvchini qaytaradi; bo'lmasa unga yangi oila ochib beradi.
+
+    Oilasi yo'q (family_id NULL) qolib ketgan foydalanuvchiga ham yangi oila ochadi,
+    shunda hech qayerda family_id None bo'lib qolmaydi.
+    """
+    user = await get_user(telegram_id)
+    if user is not None and user["family_id"] is not None:
+        return user
+    if user is None:
+        return await create_user_with_new_family(telegram_id, full_name)
+
+    pool = await get_pool()
+    async with pool.acquire() as conn:
+        async with conn.transaction():
+            code = _gen_invite_code()
+            while await conn.fetchval("SELECT 1 FROM families WHERE invite_code = $1", code):
+                code = _gen_invite_code()
+            family = await conn.fetchrow(
+                "INSERT INTO families (invite_code) VALUES ($1) RETURNING *", code
+            )
+            return await conn.fetchrow(
+                "UPDATE users SET family_id = $1, role = 'asosiy' WHERE telegram_id = $2 RETURNING *",
+                family["id"], telegram_id,
+            )
 
 
 async def join_family(telegram_id: int, full_name: str, invite_code: str) -> asyncpg.Record | None:
@@ -157,7 +204,9 @@ async def add_entry(
     )
 
 
-async def list_entries(family_id: int, category_id: int) -> list[asyncpg.Record]:
+async def list_entries(
+    family_id: int, category_id: int, limit: int = ENTRIES_PAGE_SIZE, offset: int = 0
+) -> list[asyncpg.Record]:
     pool = await get_pool()
     return await pool.fetch(
         """
@@ -165,8 +214,9 @@ async def list_entries(family_id: int, category_id: int) -> list[asyncpg.Record]
         LEFT JOIN users u ON u.id = e.user_id
         WHERE e.family_id = $1 AND e.category_id = $2
         ORDER BY e.created_at DESC
+        LIMIT $3 OFFSET $4
         """,
-        family_id, category_id,
+        family_id, category_id, limit, offset,
     )
 
 
@@ -175,4 +225,56 @@ async def count_entries(family_id: int, category_id: int) -> int:
     return await pool.fetchval(
         "SELECT count(*) FROM entries WHERE family_id = $1 AND category_id = $2",
         family_id, category_id,
+    )
+
+
+async def get_entry(entry_id: int, family_id: int) -> asyncpg.Record | None:
+    """Yozuvni qaytaradi. family_id shart — begona oilaning yozuviga tegib bo'lmasin."""
+    pool = await get_pool()
+    return await pool.fetchrow(
+        """
+        SELECT e.*, u.full_name, c.name AS category_name FROM entries e
+        LEFT JOIN users u ON u.id = e.user_id
+        LEFT JOIN categories c ON c.id = e.category_id
+        WHERE e.id = $1 AND e.family_id = $2
+        """,
+        entry_id, family_id,
+    )
+
+
+async def delete_entry(entry_id: int, family_id: int) -> bool:
+    pool = await get_pool()
+    result = await pool.execute(
+        "DELETE FROM entries WHERE id = $1 AND family_id = $2", entry_id, family_id
+    )
+    return result.endswith(" 1")
+
+
+async def search_entries(
+    family_id: int, query: str, category_id: int | None = None, limit: int = 20
+) -> list[asyncpg.Record]:
+    """Matn va izohlar bo'yicha qidiradi. category_id berilsa — faqat shu toifa ichidan."""
+    pool = await get_pool()
+    # LIKE ning maxsus belgilarini qochiramiz, aks holda "%" hamma narsani topib beradi
+    safe = query.strip().replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
+    pattern = f"%{safe}%"
+    return await pool.fetch(
+        r"""
+        SELECT e.*, u.full_name, c.name AS category_name FROM entries e
+        LEFT JOIN users u ON u.id = e.user_id
+        LEFT JOIN categories c ON c.id = e.category_id
+        WHERE e.family_id = $1
+          AND ($2::int IS NULL OR e.category_id = $2)
+          AND (e.text_content ILIKE $3 ESCAPE '\' OR e.caption ILIKE $3 ESCAPE '\')
+        ORDER BY e.created_at DESC
+        LIMIT $4
+        """,
+        family_id, category_id, pattern, limit,
+    )
+
+
+async def list_family_members(family_id: int) -> list[asyncpg.Record]:
+    pool = await get_pool()
+    return await pool.fetch(
+        "SELECT * FROM users WHERE family_id = $1 ORDER BY created_at", family_id
     )
