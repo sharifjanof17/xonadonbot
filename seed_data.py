@@ -2,15 +2,17 @@
 #
 # Har bir toifa uchun:
 #   code            — tartib raqami (o'zgarmaydi, baza shu bo'yicha yangilanadi)
-#   name/description        — o'zbekcha nomi va izohi (asl jadvaldagidek)
+#   name/description        — o'zbekcha (lotin) nomi va izohi
 #   name_ru/description_ru  — ruscha varianti
 #   prompt/prompt_ru        — "➕ Qo'shish" bosilganda bot aynan nima so'rashi
+#
+# Asl jadval kirill yozuvida edi; ma'nosi saqlangan holda lotin o'zbekchaga o'girilgan.
 
 CATEGORIES = [
     {
         "code": 1,
-        "name": "Оила татбир расмлари",
-        "description": "Хохлаганда оила расмларини кура олиш учун",
+        "name": "Oila tadbir rasmlari",
+        "description": "Xohlagan paytda oila rasmlarini ko'rish uchun",
         "name_ru": "Семейные фото мероприятий",
         "description_ru": "Чтобы в любой момент посмотреть семейные фото",
         "prompt": "📸 Oila tadbiri rasmini yuboring.\nIzohda yozing: tadbir nomi va sanasi (masalan: To'y, 12.08.2026).",
@@ -18,8 +20,8 @@ CATEGORIES = [
     },
     {
         "code": 2,
-        "name": "Оила татбир видеолари",
-        "description": "Хохлаганда оила видео ларрини кура олиш учун",
+        "name": "Oila tadbir videolari",
+        "description": "Xohlagan paytda oila videolarini ko'rish uchun",
         "name_ru": "Семейные видео мероприятий",
         "description_ru": "Чтобы в любой момент посмотреть семейные видео",
         "prompt": "🎬 Oila tadbiri videosini yuboring.\nIzohda yozing: tadbir nomi va sanasi.",
@@ -27,8 +29,8 @@ CATEGORIES = [
     },
     {
         "code": 3,
-        "name": "Оила шукрона кунлари",
-        "description": "Хохлаганда оила шукрона кунларини кура олиш учун",
+        "name": "Oila shukrona kunlari",
+        "description": "Xohlagan paytda oila shukrona kunlarini ko'rish uchun",
         "name_ru": "Дни благодарности семьи",
         "description_ru": "Чтобы в любой момент вспомнить дни благодарности семьи",
         "prompt": "🙏 Shukrona kuni haqida yozing yoki rasm/video yuboring.\nKerak: kimning shukronasi, sanasi, qayerda bo'lgani.",
@@ -36,8 +38,8 @@ CATEGORIES = [
     },
     {
         "code": 4,
-        "name": "Оила дустлар шукрона кунлари",
-        "description": "Хохлаганда дустлар шукрона кунларини кура олиш учун",
+        "name": "Oila do'stlarining shukrona kunlari",
+        "description": "Xohlagan paytda do'stlar shukrona kunlarini ko'rish uchun",
         "name_ru": "Дни благодарности друзей семьи",
         "description_ru": "Чтобы в любой момент вспомнить дни благодарности друзей",
         "prompt": "🙏 Do'stlar shukronasi haqida yozing yoki rasm yuboring.\nKerak: kimning oilasi, sanasi, qayerda bo'lgani.",
@@ -45,8 +47,8 @@ CATEGORIES = [
     },
     {
         "code": 5,
-        "name": "Оила Туйга одам айтиш",
-        "description": "Эсга тушиши билан хар жойда езиб юриш ва шаклантириш учун",
+        "name": "To'yga aytiladiganlar ro'yxati",
+        "description": "Esga tushgan zahoti yozib borish va ro'yxatni shakllantirish uchun",
         "name_ru": "Список приглашённых на свадьбу",
         "description_ru": "Записывать сразу, как вспомнилось, и постепенно формировать список",
         "prompt": "✍️ Kimni to'yga aytmoqchisiz?\nYozing: ism-familiya, telefon raqami, qaysi tomondan qarindosh. Bir nechtasini bir xabarda ham yozsangiz bo'ladi.",
@@ -54,8 +56,8 @@ CATEGORIES = [
     },
     {
         "code": 6,
-        "name": "Оила свет показаниси",
-        "description": "Доимо показаниларни тезда топиш ва туловини килиш учун солиштириш учун",
+        "name": "Svet (elektr) ko'rsatkichi",
+        "description": "Ko'rsatkichlarni doim tez topish va to'lovdan oldin solishtirish uchun",
         "name_ru": "Показания счётчика света",
         "description_ru": "Чтобы всегда быстро найти показания и сверить перед оплатой",
         "prompt": "💡 Svet hisoblagichi ko'rsatkichini yuboring.\nMasalan: <code>45231 — 01.08.2026</code>\nHisoblagich rasmini ham yuborsangiz bo'ladi.",
@@ -63,8 +65,8 @@ CATEGORIES = [
     },
     {
         "code": 7,
-        "name": "Оила газ показаниси",
-        "description": "Доимо показаниларни тезда топиш ва туловини килиш учун солиштириш учун",
+        "name": "Gaz ko'rsatkichi",
+        "description": "Ko'rsatkichlarni doim tez topish va to'lovdan oldin solishtirish uchun",
         "name_ru": "Показания счётчика газа",
         "description_ru": "Чтобы всегда быстро найти показания и сверить перед оплатой",
         "prompt": "🔥 Gaz hisoblagichi ko'rsatkichini yuboring.\nMasalan: <code>1830 — 01.08.2026</code>\nHisoblagich rasmini ham yuborsangiz bo'ladi.",
@@ -72,8 +74,8 @@ CATEGORIES = [
     },
     {
         "code": 8,
-        "name": "Оила сув паказаниси",
-        "description": "Доимо показаниларни тезда топиш ва туловини килиш учун солиштириш учун",
+        "name": "Suv ko'rsatkichi",
+        "description": "Ko'rsatkichlarni doim tez topish va to'lovdan oldin solishtirish uchun",
         "name_ru": "Показания счётчика воды",
         "description_ru": "Чтобы всегда быстро найти показания и сверить перед оплатой",
         "prompt": "💧 Suv hisoblagichi ko'rsatkichini yuboring.\nMasalan: <code>274 — 01.08.2026</code>\nHisoblagich rasmini ham yuborsangiz bo'ladi.",
@@ -81,8 +83,8 @@ CATEGORIES = [
     },
     {
         "code": 9,
-        "name": "Оила дустлар руйхати",
-        "description": "Доимо дустларимиз руйхати турса обет ужн килишларда фойдаланамиз",
+        "name": "Oila do'stlari ro'yxati",
+        "description": "Do'stlar ro'yxati doim tursa, taklif va tadbirlarda foydalanamiz",
         "name_ru": "Список друзей семьи",
         "description_ru": "Чтобы список друзей всегда был под рукой — для приглашений и застолий",
         "prompt": "👥 Do'stingiz haqida yozing.\nKerak: ism-familiya, telefon raqami, qayerdan tanish, oilasi haqida qisqacha.",
@@ -90,8 +92,8 @@ CATEGORIES = [
     },
     {
         "code": 10,
-        "name": "Оила кук паспортлари",
-        "description": "Бирор зарурият тугилганда тезда фойдаланиш учун",
+        "name": "Oila ko'k pasportlari",
+        "description": "Biror zarurat tug'ilganda tezda foydalanish uchun",
         "name_ru": "Синие паспорта семьи",
         "description_ru": "Чтобы быстро воспользоваться при необходимости",
         "prompt": "🪪 Ko'k pasport rasmini yoki skanini yuboring.\nIzohda yozing: kimning pasporti va amal qilish muddati.",
@@ -99,8 +101,8 @@ CATEGORIES = [
     },
     {
         "code": 11,
-        "name": "Оила кизил паспортлари",
-        "description": "Бирор зарурият тугилганда тезда фойдаланиш учун",
+        "name": "Oila qizil (chet el) pasportlari",
+        "description": "Biror zarurat tug'ilganda tezda foydalanish uchun",
         "name_ru": "Красные (загран) паспорта семьи",
         "description_ru": "Чтобы быстро воспользоваться при необходимости",
         "prompt": "🛂 Qizil (chet el) pasport rasmini yoki skanini yuboring.\nIzohda yozing: kimning pasporti va amal qilish muddati.",
@@ -108,8 +110,8 @@ CATEGORIES = [
     },
     {
         "code": 12,
-        "name": "Оила метркалари",
-        "description": "Бирор зарурият тугилганда тезда фойдаланиш учун",
+        "name": "Oila metrikalari (tug'ilganlik guvohnomasi)",
+        "description": "Biror zarurat tug'ilganda tezda foydalanish uchun",
         "name_ru": "Свидетельства о рождении",
         "description_ru": "Чтобы быстро воспользоваться при необходимости",
         "prompt": "📄 Metrika (tug'ilganlik guvohnomasi) rasmini yuboring.\nIzohda yozing: kimniki va tug'ilgan sanasi.",
@@ -117,8 +119,8 @@ CATEGORIES = [
     },
     {
         "code": 13,
-        "name": "Оила правалари",
-        "description": "Бирор зарурият тугилганда тезда фойдаланиш учун",
+        "name": "Oila haydovchilik guvohnomalari",
+        "description": "Biror zarurat tug'ilganda tezda foydalanish uchun",
         "name_ru": "Водительские права",
         "description_ru": "Чтобы быстро воспользоваться при необходимости",
         "prompt": "🚘 Haydovchilik guvohnomasi rasmini yuboring.\nIzohda yozing: kimniki, toifasi va amal qilish muddati.",
@@ -126,8 +128,8 @@ CATEGORIES = [
     },
     {
         "code": 14,
-        "name": "Оила уй документлари",
-        "description": "Бирор зарурият тугилганда тезда фойдаланиш учун",
+        "name": "Oila uy hujjatlari",
+        "description": "Biror zarurat tug'ilganda tezda foydalanish uchun",
         "name_ru": "Документы на дом",
         "description_ru": "Чтобы быстро воспользоваться при необходимости",
         "prompt": "🏠 Uy hujjatini yuboring (rasm yoki PDF).\nIzohda yozing: qanday hujjat, qaysi manzil, kim nomida.",
@@ -135,8 +137,8 @@ CATEGORIES = [
     },
     {
         "code": 15,
-        "name": "Оила хар хил документлари",
-        "description": "Бирор зарурият тугилганда тезда фойдаланиш учун",
+        "name": "Oilaning har xil hujjatlari",
+        "description": "Biror zarurat tug'ilganda tezda foydalanish uchun",
         "name_ru": "Прочие документы семьи",
         "description_ru": "Чтобы быстро воспользоваться при необходимости",
         "prompt": "📑 Hujjatni yuboring (rasm yoki PDF).\nIzohda yozing: qanday hujjat, kimniki, sanasi.",
@@ -144,8 +146,8 @@ CATEGORIES = [
     },
     {
         "code": 16,
-        "name": "Оила бозорлик руйхати",
-        "description": "Хар доим бозорлик руйхати турса тезда куриб бозорлик килиш учун вакт ютиш",
+        "name": "Oila bozorlik ro'yxati",
+        "description": "Bozorlik ro'yxati doim tayyor tursa, xarid tez bo'ladi va vaqt tejaladi",
         "name_ru": "Список покупок",
         "description_ru": "Чтобы список всегда был под рукой и покупки не отнимали время",
         "prompt": "🛒 Xarid ro'yxatini yozing — har bir narsani yangi qatordan.\nMasalan:\nGuruch 5 kg\nYog' 2 l\nNon 3 ta",
@@ -153,8 +155,8 @@ CATEGORIES = [
     },
     {
         "code": 17,
-        "name": "Оила машиналар руйхати",
-        "description": "Машиналар ни тугри назоратда ушлаб туриш учун",
+        "name": "Oila mashinalari ro'yxati",
+        "description": "Mashinalarni to'g'ri nazoratda ushlab turish uchun",
         "name_ru": "Список машин семьи",
         "description_ru": "Чтобы держать машины под правильным контролем",
         "prompt": "🚗 Mashina haqida yozing.\nKerak: rusumi, davlat raqami, kim nomida, sug'urta muddati. Texpasport rasmini ham yuboring.",
@@ -162,8 +164,8 @@ CATEGORIES = [
     },
     {
         "code": 18,
-        "name": "Оила телефон номерлари ва кимлар номидалиги",
-        "description": "Максад канака номерларимиз бор оилада ва ким номида турибди",
+        "name": "Telefon raqamlari va kim nomidaligi",
+        "description": "Oilada qanday raqamlar bor va ular kim nomida turganini bilish uchun",
         "name_ru": "Телефонные номера семьи и на чьё имя",
         "description_ru": "Чтобы знать, какие номера есть в семье и на кого оформлены",
         "prompt": "📱 Raqamni yozing.\nMasalan: <code>+998 90 123-45-67 — Ota nomida, Uzmobile</code>",
@@ -171,8 +173,8 @@ CATEGORIES = [
     },
     {
         "code": 19,
-        "name": "Оила келажак бизнес гоялар",
-        "description": "Келажакда бирор бизнес килмокчи булинса шу ерга езиб юриш",
+        "name": "Kelajak biznes g'oyalari",
+        "description": "Kelajakda biror biznes qilmoqchi bo'lsangiz, g'oyalarni shu yerga yozib borish uchun",
         "name_ru": "Будущие бизнес-идеи семьи",
         "description_ru": "Записывать идеи, если в будущем планируется своё дело",
         "prompt": "💡 Biznes g'oyangizni yozing.\nKerak: g'oya nima, kimga foydali, taxminiy sarmoya, birinchi qadam.",
@@ -180,8 +182,8 @@ CATEGORIES = [
     },
     {
         "code": 20,
-        "name": "Оила мерос группаси",
-        "description": "Бирор емон кун келиб колганда шу грухдан хамма нарсани куриб олиш мумкин",
+        "name": "Oila merosi",
+        "description": "Biror og'ir kun kelib qolsa, shu yerdan hamma narsani ko'rib olish mumkin",
         "name_ru": "Наследство семьи",
         "description_ru": "Чтобы в трудный день можно было увидеть всё в одном месте",
         "prompt": "📜 Meros haqida yozing.\nKerak: nima (uy, yer, mashina, pul), qayerda, kim nomida, hujjati bor-yo'qligi.",
@@ -189,8 +191,8 @@ CATEGORIES = [
     },
     {
         "code": 21,
-        "name": "Оила кудаларга номзодлар группаси",
-        "description": "Углиз булса куз олдизга олиб юриш учун бирор оилани",
+        "name": "Quda bo'lishga nomzod oilalar",
+        "description": "O'g'lingiz bo'lsa, mos oilalarni ko'z oldingizda saqlab yurish uchun",
         "name_ru": "Кандидаты в сваты",
         "description_ru": "Чтобы держать на примете подходящие семьи",
         "prompt": "🤝 Nomzod oila haqida yozing.\nKerak: familiyasi, qayerdanligi, farzandi haqida qisqacha, kim orqali tanish.",
@@ -198,8 +200,8 @@ CATEGORIES = [
     },
     {
         "code": 22,
-        "name": "Оила фарзанд келажак гоялариз",
-        "description": "Келажакда фарзандиз учун гоялар килиб юриш учун",
+        "name": "Farzandlar kelajagi uchun g'oyalar",
+        "description": "Kelajakda farzandingiz uchun g'oyalar to'plab borish uchun",
         "name_ru": "Идеи для будущего детей",
         "description_ru": "Чтобы копить идеи для будущего ваших детей",
         "prompt": "👶 G'oyangizni yozing.\nKerak: qaysi farzandingiz uchun, nima qilmoqchisiz, qaysi yoshda.",
@@ -207,8 +209,8 @@ CATEGORIES = [
     },
     {
         "code": 23,
-        "name": "Оила узиз келажак гоялариз",
-        "description": "Келажакда оилада бирор гоялар килсангиз йуколмай шу ерда туришлик учун",
+        "name": "O'zingizning kelajak g'oyalaringiz",
+        "description": "Oilada tug'ilgan g'oyalar yo'qolmay, shu yerda turishi uchun",
         "name_ru": "Ваши личные идеи на будущее",
         "description_ru": "Чтобы ваши идеи не терялись и хранились в одном месте",
         "prompt": "✨ G'oyangizni yozing.\nKerak: nima qilmoqchisiz, nima uchun muhim, qachonga rejalashtirgansiz.",
@@ -216,8 +218,8 @@ CATEGORIES = [
     },
     {
         "code": 24,
-        "name": "Оила доктор тавсиялари",
-        "description": "Докторлар тафсяси доимо бир жойда туриши учун",
+        "name": "Shifokor tavsiyalari",
+        "description": "Shifokorlar tavsiyasi doimo bir joyda turishi uchun",
         "name_ru": "Рекомендации врачей",
         "description_ru": "Чтобы рекомендации врачей всегда были в одном месте",
         "prompt": "🩺 Shifokor tavsiyasini yuboring (retsept rasmi ham bo'ladi).\nKerak: kimga, qaysi shifokor, sana, dorilar va qabul tartibi.",
@@ -225,8 +227,8 @@ CATEGORIES = [
     },
     {
         "code": 25,
-        "name": "Оилага берилган таклифномалар захираси",
-        "description": "Бирор кун туй килганизда шу таклифномалардан фойдаланасиз",
+        "name": "Taklifnomalar zaxirasi",
+        "description": "Biror kun to'y qilganingizda shu taklifnomalardan foydalanasiz",
         "name_ru": "Запас пригласительных",
         "description_ru": "Пригодятся, когда сами будете готовить торжество",
         "prompt": "💌 Taklifnoma rasmini yuboring.\nIzohda yozing: kimdan kelgan, qanday tadbir, dizayni nimasi bilan yoqdi.",
@@ -234,8 +236,8 @@ CATEGORIES = [
     },
     {
         "code": 26,
-        "name": "Оила Потаха",
-        "description": "Кадрдонлардан кимдур утган булса езиб юрасиз хайт кунлари утиб куйиш учун",
+        "name": "Potaxa (marhumlarni eslash kunlari)",
+        "description": "Qadrdonlardan kimdir vafot etsa yozib borasiz — hayit kunlari eslab o'tish uchun",
         "name_ru": "Поминальные даты",
         "description_ru": "Записывать ушедших близких, чтобы помянуть в дни памяти",
         "prompt": "🕯 Marhum haqida yozing.\nKerak: ism-familiya, vafot etgan sana, oilaga qanday yaqinligi.",
@@ -243,8 +245,8 @@ CATEGORIES = [
     },
     {
         "code": 27,
-        "name": "Оила Фарзандлар устозлари тел номерлари",
-        "description": "Бирор кун устоз керак булганда тезда топиб олиш учун",
+        "name": "Farzandlar ustozlarining telefon raqamlari",
+        "description": "Biror kun ustoz kerak bo'lganda tezda topib olish uchun",
         "name_ru": "Телефоны учителей детей",
         "description_ru": "Чтобы быстро найти нужного учителя",
         "prompt": "📞 O'qituvchi haqida yozing.\nKerak: ism-sharifi, qaysi fan, telefon raqami, qaysi farzandingizga dars beradi.",
@@ -252,8 +254,8 @@ CATEGORIES = [
     },
     {
         "code": 28,
-        "name": "Оила Мундарижа",
-        "description": "Бунда хамма файлларни шу ерга ташлаб куясиз эсиздан чикса шу ер оркали топасиз",
+        "name": "Oila mundarijasi (barcha fayllar)",
+        "description": "Hamma fayllarni shu yerga tashlab qo'yasiz — esingizdan chiqsa shu yerdan topasiz",
         "name_ru": "Оглавление (все файлы)",
         "description_ru": "Складывайте сюда все файлы — потом найдёте через поиск",
         "prompt": "🗂 Faylni yuboring.\nIzohda qisqacha yozing bu nima ekanini — keyin 🔍 Qidirish orqali shu so'z bo'yicha topasiz.",
@@ -261,8 +263,8 @@ CATEGORIES = [
     },
     {
         "code": 29,
-        "name": "Оила локатциялар керакли",
-        "description": "Бирор локатциялар макул келса шу жойга туширбиб куйилади",
+        "name": "Kerakli lokatsiyalar",
+        "description": "Biror joy ma'qul kelsa, shu yerga saqlab qo'yiladi",
         "name_ru": "Нужные локации",
         "description_ru": "Сохраняйте сюда понравившиеся места",
         "prompt": "📍 Manzilni yozing yoki joy rasmini yuboring.\nKerak: joy nomi, manzili, nima uchun kerak bo'lishi mumkin.",
@@ -270,8 +272,8 @@ CATEGORIES = [
     },
     {
         "code": 30,
-        "name": "Оила Карздорлар ва Хакдорлар руйхати",
-        "description": "Максад явни куриниб туриш учун",
+        "name": "Qarzdorlar va haqdorlar ro'yxati",
+        "description": "Hisob-kitob yaqqol ko'rinib turishi uchun",
         "name_ru": "Должники и кредиторы",
         "description_ru": "Чтобы всё было наглядно видно",
         "prompt": "💰 Qarz haqida yozing.\nMasalan: <code>Akmalga 5 000 000 so'm berildi — 01.08.2026, qaytarish: 01.10.2026</code>",
@@ -279,8 +281,8 @@ CATEGORIES = [
     },
     {
         "code": 31,
-        "name": "Оила Совринлари",
-        "description": "Канакадур совринлар олинса шу ерда саклаш ва хар замонда томоша килиш",
+        "name": "Oila sovrinlari",
+        "description": "Olingan sovrinlarni saqlash va har zamonda ko'rib turish uchun",
         "name_ru": "Награды семьи",
         "description_ru": "Хранить награды и время от времени пересматривать",
         "prompt": "🏆 Sovrin yoki diplom rasmini yuboring.\nIzohda yozing: kim oldi, nima uchun, qachon.",
@@ -288,8 +290,8 @@ CATEGORIES = [
     },
     {
         "code": 32,
-        "name": "Оила Сафар режалар ва руйхатларим",
-        "description": "Бирор сафарга чиксам шу ерда режа киламан ва руйхатдан фойдаланаман",
+        "name": "Safar rejalari va ro'yxatlari",
+        "description": "Safarga chiqqanda shu yerda reja qilib, tayyor ro'yxatdan foydalanish uchun",
         "name_ru": "Планы и списки поездок",
         "description_ru": "Планировать поездку и пользоваться готовым списком",
         "prompt": "✈️ Safar rejasini yozing.\nKerak: qayerga, qachon, kimlar boradi, nimalar olish kerak, taxminiy xarajat.",
@@ -297,8 +299,8 @@ CATEGORIES = [
     },
     {
         "code": 33,
-        "name": "Оила зур зур домлалар гаплари",
-        "description": "Максад яхши сухбатларни кайта эшитиб фойдаланиб юриш учун",
+        "name": "Zo'r domlalarning gaplari",
+        "description": "Yaxshi suhbatlarni qayta eshitib, foydalanib yurish uchun",
         "name_ru": "Ценные слова наставников",
         "description_ru": "Чтобы переслушивать хорошие беседы и пользоваться ими",
         "prompt": "🎙 Ovozli xabar, video yoki matn yuboring.\nIzohda yozing: kimning gapi va mavzusi nima.",
@@ -306,8 +308,8 @@ CATEGORIES = [
     },
     {
         "code": 34,
-        "name": "Оила Зур зур устоз гаплари",
-        "description": "Максад яхши сухбатларни кайта эшитиб фойдаланиб юриш учун",
+        "name": "Zo'r ustozlarning gaplari",
+        "description": "Yaxshi suhbatlarni qayta eshitib, foydalanib yurish uchun",
         "name_ru": "Ценные слова учителей",
         "description_ru": "Чтобы переслушивать хорошие беседы и пользоваться ими",
         "prompt": "🎙 Ovozli xabar, video yoki matn yuboring.\nIzohda yozing: qaysi ustoz va mavzusi nima.",
@@ -315,8 +317,8 @@ CATEGORIES = [
     },
     {
         "code": 35,
-        "name": "Оила Зур зур мотивациоон хар хил гаплар",
-        "description": "Максад яхши сухбатларни кайта эшитиб фойдаланиб юриш учун",
+        "name": "Har xil motivatsion gaplar",
+        "description": "Yaxshi suhbatlarni qayta eshitib, foydalanib yurish uchun",
         "name_ru": "Мотивационные материалы",
         "description_ru": "Чтобы переслушивать хорошие беседы и пользоваться ими",
         "prompt": "🔥 Motivatsion video, ovozli xabar yoki matnni yuboring.\nIzohda yozing: manbasi va nimasi bilan yoqdi.",
@@ -324,8 +326,8 @@ CATEGORIES = [
     },
     {
         "code": 36,
-        "name": "Оила фарзандлар ваядалари",
-        "description": "Фарзандлардан хам ваядалар олиб тугри йулда харакат килдириш",
+        "name": "Farzandlarning va'dalari",
+        "description": "Farzandlardan va'dalar olib, to'g'ri yo'lda harakat qildirish uchun",
         "name_ru": "Обещания детей",
         "description_ru": "Брать обещания с детей и направлять их на верный путь",
         "prompt": "🤞 Farzandingiz bergan va'dani yozing.\nKerak: kim, nima va'da qildi, qaysi muddatgacha.",
@@ -333,8 +335,8 @@ CATEGORIES = [
     },
     {
         "code": 37,
-        "name": "Оила Фарзандлар дарс расписаниси",
-        "description": "Фарзандлар тугри хакакат киляптими доимо назорат килиб бориш",
+        "name": "Farzandlar dars jadvali",
+        "description": "Farzandlar to'g'ri harakat qilyaptimi — doimo nazorat qilib borish uchun",
         "name_ru": "Расписание уроков детей",
         "description_ru": "Постоянно контролировать, всё ли у детей идёт правильно",
         "prompt": "📅 Dars jadvali rasmini yuboring yoki yozing.\nIzohda: qaysi farzand, qaysi sinf, qaysi chorak.",
@@ -342,8 +344,8 @@ CATEGORIES = [
     },
     {
         "code": 38,
-        "name": "Оила Фарзандлар хает гилдираклари",
-        "description": "Фарзандларга мос хает гилдирак чизиб бирга куйиб чикиш ва шунга караб харакат",
+        "name": "Farzandlarning hayot g'ildiragi",
+        "description": "Farzandlarga mos hayot g'ildiragini birga chizib chiqish va shunga qarab harakat qilish",
         "name_ru": "Колесо жизни детей",
         "description_ru": "Составлять с детьми колесо жизни и двигаться по нему",
         "prompt": "⚙️ Hayot g'ildiragi rasmini yoki tahlilini yuboring.\nIzohda: qaysi farzand, qaysi sana, qaysi yo'nalish bo'yicha.",
@@ -351,8 +353,8 @@ CATEGORIES = [
     },
     {
         "code": 39,
-        "name": "Оила Ресторанлар",
-        "description": "Ресторанлар хар доим шу ерда шаклантириб бориш",
+        "name": "Restoranlar",
+        "description": "Restoranlar ro'yxatini shu yerda shakllantirib borish",
         "name_ru": "Рестораны",
         "description_ru": "Постепенно собирать здесь список ресторанов",
         "prompt": "🍽 Restoran haqida yozing.\nKerak: nomi, manzili, taxminiy narxi, nimasi yaxshi, telefon raqami.",
@@ -360,8 +362,8 @@ CATEGORIES = [
     },
     {
         "code": 40,
-        "name": "Оила Дам олиш масканлари",
-        "description": "Дам олиш масканларини шу ерда шаклантириб бориш",
+        "name": "Dam olish maskanlari",
+        "description": "Dam olish maskanlarini shu yerda shakllantirib borish",
         "name_ru": "Места отдыха",
         "description_ru": "Постепенно собирать здесь места для отдыха",
         "prompt": "🏖 Dam olish maskani haqida yozing.\nKerak: nomi, manzili, narxi, qaysi faslda borish qulay.",
@@ -369,8 +371,8 @@ CATEGORIES = [
     },
     {
         "code": 41,
-        "name": "Оила Дизайн ва курилишлар",
-        "description": "Бирор кун курилиш килганизда оскотади дизайнлардан фойдаланасиз",
+        "name": "Dizayn va qurilishlar",
+        "description": "Biror kun qurilish qilganingizda shu dizaynlardan foydalanasiz",
         "name_ru": "Дизайн и строительство",
         "description_ru": "Пригодится, когда соберётесь строить или делать ремонт",
         "prompt": "🏗 Yoqqan dizayn rasmini yuboring.\nIzohda yozing: qaysi xona yoki joy uchun, nimasi yoqdi.",
@@ -378,8 +380,8 @@ CATEGORIES = [
     },
     {
         "code": 42,
-        "name": "Оила фарзандларга вазифалар",
-        "description": "Фарзандларга вазифалар бериб контрол килиб юриш",
+        "name": "Farzandlarga vazifalar",
+        "description": "Farzandlarga vazifalar berib, nazorat qilib borish uchun",
         "name_ru": "Задания для детей",
         "description_ru": "Давать детям задания и держать их на контроле",
         "prompt": "📝 Vazifani yozing.\nKerak: qaysi farzandga, nima qilishi kerak, qachongacha, bajargani uchun nima bo'ladi.",
