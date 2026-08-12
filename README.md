@@ -5,13 +5,19 @@ narsalar va h.k.) Telegram orqali saqlab, kerak bo'lganda tezda topib beruvchi b
 
 ## Qanday ishlaydi
 
-- `/start` — ro'yxatdan o'tasiz, sizga yangi "oila" va unga qo'shilish kodi yaratiladi
+- `/start` — avval **til tanlanadi** (🇺🇿 O'zbekcha / 🇷🇺 Русский), so'ng ro'yxatdan o'tasiz,
+  sizga yangi "oila" va unga qo'shilish kodi yaratiladi
+- `/til` — tilni istalgan payt o'zgartirish. Til har bir foydalanuvchi uchun alohida
+  saqlanadi: bitta oilada ota o'zbekcha, ona ruscha ishlatishi mumkin
 - `/join KOD` — oila a'zolari shu kod bilan bir xil oilaga qo'shiladi (barchasi bitta ma'lumot bazasini ko'radi)
 - `/categories` — 42 ta toifa ro'yxati (sahifalab ko'rsatiladi)
 - `/search so'z` — barcha toifalar ichidan matn va izohlar bo'yicha qidirish
 - `/family` — oila kodi va a'zolar ro'yxati (rollari bilan)
 - `/help` — qisqacha yordam
-- Toifani tanlab **➕ Qo'shish** — matn, rasm, video, hujjat, ovozli xabar yuboriladi va saqlanadi
+- Toifani tanlab **➕ Qo'shish** — bot **aynan shu toifaga mos ma'lumotni so'raydi**
+  (masalan svet toifasida: «hisoblagich ko'rsatkichi va sana, masalan 45231 — 01.08.2026»,
+  pasport toifasida: «pasport rasmi, izohda kimniki va muddati»), so'ng matn, rasm, video,
+  hujjat yoki ovozli xabar yuboriladi
 - **👀 Ko'rish** — o'sha toifadagi yozuvlar 5 tadan sahifalab chiqadi (kim, qachon qo'shgani bilan)
 - **🔍 Qidirish** — faqat shu toifa ichidan qidiradi
 - **🗑 O'chirish** — har bir yozuv ostida. Oila boshlig'i (`asosiy`) hamma yozuvni,
@@ -55,7 +61,14 @@ python main.py
 - `storage.py` — FSM holatlarini Postgres'da saqlash (restartdan keyin ham yo'qolmaydi)
 - `handlers.py` — buyruqlar va tugmalar mantiqi
 - `keyboards.py` — inline klaviaturalar
-- `seed_data.py` — 42 ta toifa ro'yxati
+- `i18n.py` — bot matnlarining o'zbekcha/ruscha tarjimalari
+- `seed_data.py` — 42 ta toifa: uz/ru nomi, izohi va qo'shishda so'raladigan matni
+
+### Toifa qo'shish yoki matnini o'zgartirish
+
+Faqat `seed_data.py` tahrirlanadi — bot qayta ishga tushganda `init_db()` bazadagi
+toifalarni `code` bo'yicha yangilaydi (mavjud yozuvlarga tegmaydi). Yangi ustunlar
+`ALTER TABLE ... IF NOT EXISTS` orqali eski bazaga ham o'zi qo'shiladi.
 
 ## Keyingi qadamlar (ixtiyoriy)
 

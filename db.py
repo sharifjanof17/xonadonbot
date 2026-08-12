@@ -36,6 +36,7 @@ CREATE TABLE IF NOT EXISTS users (
     full_name TEXT,
     family_id INT REFERENCES families(id) ON DELETE SET NULL,
     role TEXT DEFAULT 'a_zo', -- 'asosiy' | 'yordamchi' | 'a_zo'
+    language TEXT DEFAULT 'uz', -- 'uz' | 'ru'
     created_at TIMESTAMPTZ DEFAULT now()
 );
 
@@ -43,8 +44,19 @@ CREATE TABLE IF NOT EXISTS categories (
     id SERIAL PRIMARY KEY,
     code INT UNIQUE NOT NULL,
     name TEXT NOT NULL,
-    description TEXT
+    description TEXT,
+    name_ru TEXT,
+    description_ru TEXT,
+    prompt TEXT,        -- "➕ Qo'shish" bosilganda so'raladigan matn
+    prompt_ru TEXT
 );
+
+-- Eski bazalar uchun (Railway'dagi mavjud baza yangi ustunlarni shu yerdan oladi)
+ALTER TABLE users ADD COLUMN IF NOT EXISTS language TEXT DEFAULT 'uz';
+ALTER TABLE categories ADD COLUMN IF NOT EXISTS name_ru TEXT;
+ALTER TABLE categories ADD COLUMN IF NOT EXISTS description_ru TEXT;
+ALTER TABLE categories ADD COLUMN IF NOT EXISTS prompt TEXT;
+ALTER TABLE categories ADD COLUMN IF NOT EXISTS prompt_ru TEXT;
 
 CREATE TABLE IF NOT EXISTS entries (
     id SERIAL PRIMARY KEY,
@@ -82,14 +94,21 @@ async def init_db() -> None:
     pool = await get_pool()
     async with pool.acquire() as conn:
         await conn.execute(SCHEMA)
-        for code, name, description in CATEGORIES:
+        for cat in CATEGORIES:
             await conn.execute(
                 """
-                INSERT INTO categories (code, name, description)
-                VALUES ($1, $2, $3)
-                ON CONFLICT (code) DO UPDATE SET name = EXCLUDED.name, description = EXCLUDED.description
+                INSERT INTO categories (code, name, description, name_ru, description_ru, prompt, prompt_ru)
+                VALUES ($1, $2, $3, $4, $5, $6, $7)
+                ON CONFLICT (code) DO UPDATE SET
+                    name = EXCLUDED.name,
+                    description = EXCLUDED.description,
+                    name_ru = EXCLUDED.name_ru,
+                    description_ru = EXCLUDED.description_ru,
+                    prompt = EXCLUDED.prompt,
+                    prompt_ru = EXCLUDED.prompt_ru
                 """,
-                code, name, description,
+                cat["code"], cat["name"], cat["description"],
+                cat["name_ru"], cat["description_ru"], cat["prompt"], cat["prompt_ru"],
             )
 
 
@@ -170,6 +189,13 @@ async def join_family(telegram_id: int, full_name: str, invite_code: str) -> asy
         return family
 
 
+async def set_language(telegram_id: int, language: str) -> None:
+    pool = await get_pool()
+    await pool.execute(
+        "UPDATE users SET language = $1 WHERE telegram_id = $2", language, telegram_id
+    )
+
+
 async def get_family_invite_code(family_id: int) -> str:
     pool = await get_pool()
     return await pool.fetchval("SELECT invite_code FROM families WHERE id = $1", family_id)
@@ -233,7 +259,7 @@ async def get_entry(entry_id: int, family_id: int) -> asyncpg.Record | None:
     pool = await get_pool()
     return await pool.fetchrow(
         """
-        SELECT e.*, u.full_name, c.name AS category_name FROM entries e
+        SELECT e.*, u.full_name, c.name AS category_name, c.name_ru AS category_name_ru FROM entries e
         LEFT JOIN users u ON u.id = e.user_id
         LEFT JOIN categories c ON c.id = e.category_id
         WHERE e.id = $1 AND e.family_id = $2
@@ -260,7 +286,7 @@ async def search_entries(
     pattern = f"%{safe}%"
     return await pool.fetch(
         r"""
-        SELECT e.*, u.full_name, c.name AS category_name FROM entries e
+        SELECT e.*, u.full_name, c.name AS category_name, c.name_ru AS category_name_ru FROM entries e
         LEFT JOIN users u ON u.id = e.user_id
         LEFT JOIN categories c ON c.id = e.category_id
         WHERE e.family_id = $1
